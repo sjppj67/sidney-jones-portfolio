@@ -1,0 +1,16 @@
+# Arquivo de configuração para o deploy na Netlify
+# Ele controla todo o processo de build.
+
+[build]
+  # Comando de build:
+  # 1. Entra na pasta 'cliente', instala dependências Node.js
+  # 2. Entra na pasta 'servidor', instala dependências Ruby
+  # 3. Executa o build do Jekyll a partir da pasta 'servidor'
+  command = "cd cliente && pnpm install && cd ../servidor && bundle install && bundle exec jekyll build"
+  
+  # Diretório de publicação:
+  # Onde o site finalizado estará, relativo à raiz do projeto.
+  publish = "servidor/_site"
+
+# As variáveis de ambiente (NODE_VERSION e RUBY_VERSION)
+# continuam configuradas na interface da Netlify, o que está correto.
