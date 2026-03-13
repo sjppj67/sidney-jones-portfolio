@@ -4,13 +4,13 @@
 [build]
   # Comando de build:
   # 1. Entra na pasta 'client', instala dependências Node.js
-  # 2. Entra na pasta 'servidor', instala dependências Ruby
-  # 3. Executa o build do Jekyll a partir da pasta 'servidor'
-  command = "cd client && pnpm install && cd ../servidor && bundle install && bundle exec jekyll build"
+  # 2. Entra na pasta 'server', instala dependências Ruby
+  # 3. Executa o build do Jekyll a partir da pasta 'server'
+  command = "cd client && pnpm install && cd ../server && bundle install && bundle exec jekyll build"
   
   # Diretório de publicação:
   # Onde o site finalizado estará, relativo à raiz do projeto.
-  publish = "servidor/_site"
+  publish = "server/_site"
 
 # As variáveis de ambiente (NODE_VERSION e RUBY_VERSION)
 # continuam configuradas na interface da Netlify, o que está correto.
