@@ -2,9 +2,11 @@ import { COOKIE_NAME } from "@shared/const";
 import { getSessionCookieOptions } from "./_core/cookies";
 import { systemRouter } from "./_core/systemRouter";
 import { publicProcedure, router } from "./_core/trpc";
+import { saveContactMessage } from "./db";
+import { notifyOwner } from "./_core/notification";
+import { z } from "zod";
 
 export const appRouter = router({
-    // if you need to use socket.io, read and register route in server/_core/index.ts, all api should start with '/api/' so that the gateway can route correctly
   system: systemRouter,
   auth: router({
     me: publicProcedure.query(opts => opts.ctx.user),
@@ -17,12 +19,34 @@ export const appRouter = router({
     }),
   }),
 
-  // TODO: add feature routers here, e.g.
-  // todo: router({
-  //   list: protectedProcedure.query(({ ctx }) =>
-  //     db.getUserTodos(ctx.user.id)
-  //   ),
-  // }),
+  contact: router({
+    submit: publicProcedure
+      .input(z.object({
+        name: z.string().min(2, "Nome é obrigatório"),
+        company: z.string().optional(),
+        email: z.string().email("E-mail inválido"),
+        phone: z.string().optional(),
+        position: z.string().optional(),
+        message: z.string().min(10, "Mensagem deve ter pelo menos 10 caracteres"),
+      }))
+      .mutation(async ({ input }) => {
+        await saveContactMessage({
+          name: input.name,
+          company: input.company ?? null,
+          email: input.email,
+          phone: input.phone ?? null,
+          position: input.position ?? null,
+          message: input.message,
+        });
+
+        await notifyOwner({
+          title: `Novo contato de recrutador: ${input.name}`,
+          content: `**Nome:** ${input.name}\n**Empresa:** ${input.company || "Não informado"}\n**E-mail:** ${input.email}\n**Telefone:** ${input.phone || "Não informado"}\n**Cargo/Vaga:** ${input.position || "Não informado"}\n\n**Mensagem:**\n${input.message}`,
+        });
+
+        return { success: true };
+      }),
+  }),
 });
 
 export type AppRouter = typeof appRouter;
