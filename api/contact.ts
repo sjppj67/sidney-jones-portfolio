@@ -1,6 +1,6 @@
-import { Resend } from 'resend';
+import nodemailer from 'nodemailer';
 
-export default async function handler(req, res) {
+export default async function handler(req: any, res: any) {
   if (req.method !== 'POST') {
     return res.status(405).json({ message: 'Method not allowed' });
   }
@@ -11,17 +11,25 @@ export default async function handler(req, res) {
     return res.status(400).json({ message: 'Missing required fields' });
   }
 
-  const resend = new Resend(process.env.RESEND_API_KEY);
+  const transporter = nodemailer.createTransport({
+    host: 'smtp.zoho.com',
+    port: 587,
+    secure: false,
+    auth: {
+      user: 'contato@sidneyjones.com.br',
+      pass: process.env.ZOHO_PASSWORD,
+    },
+  });
 
   try {
-    const { data, error } = await resend.emails.send({
-      from: 'Contato <onboarding@resend.dev>',
-      to: ['sjones@ufrj.br'], // correção do endereço e remoção do null
+    await transporter.sendMail({
+      from: `"${name}" <contato@sidneyjones.com.br>`,
+      to: 'contato@sidneyjones.com.br',
       subject: `Nova mensagem de ${name} - ${position || 'Oportunidade'}`,
       html: `
         <p><strong>Nome:</strong> ${name}</p>
         <p><strong>Empresa:</strong> ${company || 'Não informada'}</p>
-        <p><strong>E-mail:</strong> ${email}</p>
+        <p><strong>E-mail do contato:</strong> ${email}</p>
         <p><strong>Telefone:</strong> ${phone || 'Não informado'}</p>
         <p><strong>Cargo/Vaga:</strong> ${position || 'Não informado'}</p>
         <p><strong>Mensagem:</strong></p>
@@ -29,14 +37,9 @@ export default async function handler(req, res) {
       `,
     });
 
-    if (error) {
-      console.error(error);
-      return res.status(500).json({ message: 'Error sending email' });
-    }
-
     return res.status(200).json({ message: 'Email sent successfully' });
   } catch (err) {
     console.error(err);
-    return res.status(500).json({ message: 'Internal server error' });
+    return res.status(500).json({ message: 'Error sending email' });
   }
 }
