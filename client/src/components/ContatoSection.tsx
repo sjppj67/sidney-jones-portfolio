@@ -143,7 +143,6 @@ export default function ContatoSection() {
               </div>
               <div
                 className="badge-base LI-profile-badge"
-                data-locale="pt_BR"
                 data-size="medium"
                 data-theme="light"
                 data-type="VERTICAL"
@@ -156,7 +155,6 @@ export default function ContatoSection() {
                   target="_blank"
                   rel="noopener noreferrer"
                 >
-                  Sidney Jones
                 </a>
               </div>
               <script
