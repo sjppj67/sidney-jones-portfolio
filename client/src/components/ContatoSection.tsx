@@ -1,52 +1,40 @@
-import { useState } from "react";
-import { useForm } from "react-hook-form";
-import { zodResolver } from "@hookform/resolvers/zod";
-import { z } from "zod";
-import { MessageCircle, Linkedin, Mail, Send, CheckCircle2, Phone } from "lucide-react";
-import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
-import { Textarea } from "@/components/ui/textarea";
-import { Label } from "@/components/ui/label";
-import { toast } from "sonner";
-import { trpc } from "@/lib/trpc";
-
-const formSchema = z.object({
-  name: z.string().min(2, "Nome é obrigatório"),
-  company: z.string().optional(),
-  email: z.string().email("E-mail inválido"),
-  phone: z.string().optional(),
-  position: z.string().optional(),
-  message: z.string().min(10, "Mensagem deve ter pelo menos 10 caracteres"),
-});
-
-type FormData = z.infer<typeof formSchema>;
+import { useState } from 'react';
 
 export default function ContatoSection() {
-  const [submitted, setSubmitted] = useState(false);
+  const [status, setStatus] = useState<'idle' | 'loading' | 'success' | 'error'>('idle');
 
-  const {
-    register,
-    handleSubmit,
-    reset,
-    formState: { errors },
-  } = useForm<FormData>({
-    resolver: zodResolver(formSchema),
-  });
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    setStatus('loading');
 
-  const submitMutation = trpc.contact.submit.useMutation({
-    onSuccess: () => {
-      setSubmitted(true);
-      reset();
-      toast.success("Mensagem enviada com sucesso!");
-    },
-    onError: (err) => {
-      toast.error("Erro ao enviar mensagem. Tente novamente.");
-      console.error(err);
-    },
-  });
+    const formData = new FormData(e.currentTarget);
+    const data = {
+      name: formData.get('name'),
+      company: formData.get('company'),
+      email: formData.get('email'),
+      phone: formData.get('phone'),
+      position: formData.get('position'),
+      message: formData.get('message'),
+    };
 
-  const onSubmit = (data: FormData) => {
-    submitMutation.mutate(data);
+    try {
+      // Substitua pela sua URL real (veja explicação abaixo)
+      const response = await fetch('https://formspree.io/f/seu-id', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(data),
+      });
+
+      if (response.ok) {
+        setStatus('success');
+        e.currentTarget.reset();
+        setTimeout(() => setStatus('idle'), 5000);
+      } else {
+        setStatus('error');
+      }
+    } catch (error) {
+      setStatus('error');
+    }
   };
 
   return (
@@ -58,7 +46,7 @@ export default function ContatoSection() {
           "linear-gradient(135deg, oklch(0.18 0.06 245) 0%, oklch(0.25 0.08 240) 50%, oklch(0.30 0.09 235) 100%)",
       }}
     >
-      <div className="container">
+      <div className="container mx-auto px-4">
         {/* Header */}
         <div className="text-center mb-14">
           <div className="inline-flex items-center gap-2 text-white/60 text-sm font-semibold uppercase tracking-widest mb-4">
@@ -90,7 +78,7 @@ export default function ContatoSection() {
                 className="flex items-center gap-4 p-5 rounded-2xl bg-white/10 border border-white/15 hover:bg-white/20 transition-all duration-200 group"
               >
                 <div className="w-12 h-12 rounded-xl bg-green-500 flex items-center justify-center flex-shrink-0 group-hover:scale-110 transition-transform">
-                  <MessageCircle size={22} className="text-white" />
+                  <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"/></svg>
                 </div>
                 <div>
                   <div className="text-xs text-white/60 font-semibold uppercase tracking-wide mb-0.5">
@@ -105,8 +93,8 @@ export default function ContatoSection() {
                 href="mailto:contato@sidneyjones.com.br"
                 className="flex items-center gap-4 p-5 rounded-2xl bg-white/10 border border-white/15 hover:bg-white/20 transition-all duration-200 group"
               >
-                <div className="w-12 h-12 rounded-xl bg-primary flex items-center justify-center flex-shrink-0 group-hover:scale-110 transition-transform">
-                  <Mail size={22} className="text-white" />
+                <div className="w-12 h-12 rounded-xl bg-blue-600 flex items-center justify-center flex-shrink-0 group-hover:scale-110 transition-transform">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><rect width="20" height="16" x="2" y="4" rx="2"/><path d="m22 7-10 7L2 7"/></svg>
                 </div>
                 <div>
                   <div className="text-xs text-white/60 font-semibold uppercase tracking-wide mb-0.5">
@@ -124,7 +112,7 @@ export default function ContatoSection() {
                 className="flex items-center gap-4 p-5 rounded-2xl bg-white/10 border border-white/15 hover:bg-white/20 transition-all duration-200 group"
               >
                 <div className="w-12 h-12 rounded-xl bg-[#0077B5] flex items-center justify-center flex-shrink-0 group-hover:scale-110 transition-transform">
-                  <Linkedin size={22} className="text-white" />
+                  <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"/><rect width="4" height="12" x="2" y="9"/><circle cx="4" cy="4" r="2"/></svg>
                 </div>
                 <div>
                   <div className="text-xs text-white/60 font-semibold uppercase tracking-wide mb-0.5">
@@ -169,133 +157,141 @@ export default function ContatoSection() {
           {/* Right: Form */}
           <div className="lg:col-span-3">
             <div className="bg-white rounded-3xl p-8 shadow-2xl">
-              {submitted ? (
+              {status === 'success' ? (
                 <div className="flex flex-col items-center justify-center py-12 text-center">
                   <div className="w-20 h-20 rounded-full bg-green-100 flex items-center justify-center mb-4">
-                    <CheckCircle2 size={40} className="text-green-600" />
+                    <svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="text-green-600"><polyline points="20 6 9 17 4 12"/></svg>
                   </div>
-                  <h3 className="text-2xl font-bold text-foreground mb-2">
+                  <h3 className="text-2xl font-bold text-gray-800 mb-2">
                     Mensagem Enviada!
                   </h3>
-                  <p className="text-muted-foreground mb-6">
+                  <p className="text-gray-600 mb-6">
                     Obrigado pelo contato. Responderei em breve.
                   </p>
-                  <Button onClick={() => setSubmitted(false)} variant="outline">
+                  <button
+                    onClick={() => setStatus('idle')}
+                    className="px-4 py-2 border border-gray-300 rounded-lg hover:bg-gray-50 transition"
+                  >
                     Enviar outra mensagem
-                  </Button>
+                  </button>
                 </div>
               ) : (
                 <>
                   <div className="mb-6">
-                    <h3 className="text-xl font-bold text-foreground mb-1">
+                    <h3 className="text-xl font-bold text-gray-800 mb-1">
                       Formulário para Recrutadores
                     </h3>
-                    <p className="text-sm text-muted-foreground">
+                    <p className="text-sm text-gray-500">
                       Preencha os dados abaixo e entrarei em contato o mais breve possível.
                     </p>
                   </div>
 
-                  <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
+                  <form onSubmit={handleSubmit} className="space-y-4">
                     <div className="grid sm:grid-cols-2 gap-4">
                       <div>
-                        <Label htmlFor="name" className="text-sm font-semibold text-foreground mb-1.5 block">
+                        <label htmlFor="name" className="text-sm font-semibold text-gray-700 mb-1.5 block">
                           Nome Completo *
-                        </Label>
-                        <Input
+                        </label>
+                        <input
+                          type="text"
                           id="name"
-                          placeholder="Seu nome"
-                          {...register("name")}
-                          className={errors.name ? "border-red-400" : ""}
+                          name="name"
+                          required
+                          className="w-full border border-gray-300 rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
                         />
-                        {errors.name && (
-                          <p className="text-red-500 text-xs mt-1">{errors.name.message}</p>
-                        )}
                       </div>
                       <div>
-                        <Label htmlFor="company" className="text-sm font-semibold text-foreground mb-1.5 block">
+                        <label htmlFor="company" className="text-sm font-semibold text-gray-700 mb-1.5 block">
                           Empresa
-                        </Label>
-                        <Input
+                        </label>
+                        <input
+                          type="text"
                           id="company"
-                          placeholder="Nome da empresa"
-                          {...register("company")}
+                          name="company"
+                          className="w-full border border-gray-300 rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
                         />
                       </div>
                     </div>
 
                     <div className="grid sm:grid-cols-2 gap-4">
                       <div>
-                        <Label htmlFor="email" className="text-sm font-semibold text-foreground mb-1.5 block">
+                        <label htmlFor="email" className="text-sm font-semibold text-gray-700 mb-1.5 block">
                           E-mail *
-                        </Label>
-                        <Input
-                          id="email"
+                        </label>
+                        <input
                           type="email"
-                          placeholder="seu@email.com"
-                          {...register("email")}
-                          className={errors.email ? "border-red-400" : ""}
+                          id="email"
+                          name="email"
+                          required
+                          className="w-full border border-gray-300 rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
                         />
-                        {errors.email && (
-                          <p className="text-red-500 text-xs mt-1">{errors.email.message}</p>
-                        )}
                       </div>
                       <div>
-                        <Label htmlFor="phone" className="text-sm font-semibold text-foreground mb-1.5 block">
+                        <label htmlFor="phone" className="text-sm font-semibold text-gray-700 mb-1.5 block">
                           Telefone
-                        </Label>
-                        <Input
+                        </label>
+                        <input
+                          type="tel"
                           id="phone"
-                          placeholder="(21) 9 0000-0000"
-                          {...register("phone")}
+                          name="phone"
+                          className="w-full border border-gray-300 rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
                         />
                       </div>
                     </div>
 
                     <div>
-                      <Label htmlFor="position" className="text-sm font-semibold text-foreground mb-1.5 block">
+                      <label htmlFor="position" className="text-sm font-semibold text-gray-700 mb-1.5 block">
                         Cargo / Vaga em Aberto
-                      </Label>
-                      <Input
+                      </label>
+                      <input
+                        type="text"
                         id="position"
+                        name="position"
                         placeholder="Ex: Gerente de Operações, Diretor Administrativo..."
-                        {...register("position")}
+                        className="w-full border border-gray-300 rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
                       />
                     </div>
 
                     <div>
-                      <Label htmlFor="message" className="text-sm font-semibold text-foreground mb-1.5 block">
+                      <label htmlFor="message" className="text-sm font-semibold text-gray-700 mb-1.5 block">
                         Mensagem *
-                      </Label>
-                      <Textarea
+                      </label>
+                      <textarea
                         id="message"
-                        placeholder="Descreva a oportunidade, requisitos e como posso contribuir com sua organização..."
+                        name="message"
                         rows={5}
-                        {...register("message")}
-                        className={errors.message ? "border-red-400" : ""}
+                        required
+                        placeholder="Descreva a oportunidade, requisitos e como posso contribuir com sua organização..."
+                        className="w-full border border-gray-300 rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
                       />
-                      {errors.message && (
-                        <p className="text-red-500 text-xs mt-1">{errors.message.message}</p>
-                      )}
                     </div>
 
-                    <Button
+                    <button
                       type="submit"
-                      size="lg"
-                      className="w-full font-semibold"
-                      disabled={submitMutation.isPending}
+                      disabled={status === 'loading'}
+                      className="w-full bg-blue-600 text-white font-semibold py-2 rounded-lg hover:bg-blue-700 transition disabled:opacity-50 flex items-center justify-center gap-2"
                     >
-                      {submitMutation.isPending ? (
-                        <span className="flex items-center gap-2">
-                          <span className="w-4 h-4 border-2 border-white/30 border-t-white rounded-full animate-spin" />
+                      {status === 'loading' ? (
+                        <>
+                          <svg className="animate-spin h-4 w-4 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                            <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
+                            <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+                          </svg>
                           Enviando...
-                        </span>
+                        </>
                       ) : (
-                        <span className="flex items-center gap-2">
-                          <Send size={18} />
+                        <>
+                          <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg>
                           Enviar Mensagem
-                        </span>
+                        </>
                       )}
-                    </Button>
+                    </button>
+
+                    {status === 'error' && (
+                      <p className="text-red-600 text-center text-sm mt-2">
+                        Erro ao enviar. Tente novamente ou entre em contato por e-mail.
+                      </p>
+                    )}
                   </form>
                 </>
               )}
