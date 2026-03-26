@@ -16,7 +16,7 @@ export default async function handler(req, res) {
   try {
     const { data, error } = await resend.emails.send({
       from: 'Contato <onboarding@resend.dev>',
-      to: ['contato@sidneyjones.com.br'],   // substitua por seu e-mail para testar
+      to: ['contato@sidneyjones.com.br'], // correção do endereço e remoção do null
       subject: `Nova mensagem de ${name} - ${position || 'Oportunidade'}`,
       html: `
         <p><strong>Nome:</strong> ${name}</p>
