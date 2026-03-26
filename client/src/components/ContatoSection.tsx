@@ -19,7 +19,7 @@ export default function ContatoSection() {
 
     try {
       // Substitua pela sua URL real (veja explicação abaixo)
-      const response = await fetch('https://formspree.io/f/seu-id', {
+      const response = await fetch('/api/contact', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(data),
