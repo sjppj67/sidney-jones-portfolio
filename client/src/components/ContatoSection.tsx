@@ -4,38 +4,30 @@ export default function ContatoSection() {
   const [status, setStatus] = useState<'idle' | 'loading' | 'success' | 'error'>('idle');
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
-    setStatus('loading');
+  e.preventDefault();
+  setStatus('loading');
 
-    const formData = new FormData(e.currentTarget);
-    const data = {
-      name: formData.get('name'),
-      company: formData.get('company'),
-      email: formData.get('email'),
-      phone: formData.get('phone'),
-      position: formData.get('position'),
-      message: formData.get('message'),
-    };
+  const form = e.currentTarget;
+  const formData = new FormData(form);
 
-    try {
-      // Substitua pela sua URL real (veja explicação abaixo)
-      const response = await fetch('https://formspree.io/f/mbdpjbbn', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(data),
-      });
+  try {
+    const response = await fetch('https://formspree.io/f/mbdpjbbn', {
+      method: 'POST',
+      body: formData,
+      headers: { 'Accept': 'application/json' },
+    });
 
-      if (response.ok) {
-        setStatus('success');
-        e.currentTarget.reset();
-        setTimeout(() => setStatus('idle'), 5000);
-      } else {
-        setStatus('error');
-      }
-    } catch (error) {
+    if (response.ok) {
+      setStatus('success');
+      form.reset();
+      setTimeout(() => setStatus('idle'), 5000);
+    } else {
       setStatus('error');
     }
-  };
+  } catch (error) {
+    setStatus('error');
+  }
+};
 
   return (
     <section
