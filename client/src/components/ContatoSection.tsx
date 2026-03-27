@@ -1,33 +1,35 @@
-import { useState } from 'react';
+import { useState } from "react";
 
 export default function ContatoSection() {
-  const [status, setStatus] = useState<'idle' | 'loading' | 'success' | 'error'>('idle');
+  const [status, setStatus] = useState<
+    "idle" | "loading" | "success" | "error"
+  >("idle");
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
-  e.preventDefault();
-  setStatus('loading');
+    e.preventDefault();
+    setStatus("loading");
 
-  const form = e.currentTarget;
-  const formData = new FormData(form);
+    const form = e.currentTarget;
+    const formData = new FormData(form);
 
-  try {
-    const response = await fetch('https://formspree.io/f/mbdpjbbn', {
-      method: 'POST',
-      body: formData,
-      headers: { 'Accept': 'application/json' },
-    });
+    try {
+      const response = await fetch("https://formspree.io/f/mbdpjbbn", {
+        method: "POST",
+        body: formData,
+        headers: { Accept: "application/json" },
+      });
 
-    if (response.ok) {
-      setStatus('success');
-      form.reset();
-      setTimeout(() => setStatus('idle'), 5000);
-    } else {
-      setStatus('error');
+      if (response.ok) {
+        setStatus("success");
+        form.reset();
+        setTimeout(() => setStatus("idle"), 5000);
+      } else {
+        setStatus("error");
+      }
+    } catch (error) {
+      setStatus("error");
     }
-  } catch (error) {
-    setStatus('error');
-  }
-};
+  };
 
   return (
     <section
@@ -53,8 +55,8 @@ export default function ContatoSection() {
             Vamos Conversar?
           </h2>
           <p className="text-white/70 max-w-xl mx-auto text-lg">
-            Estou disponível para novas oportunidades executivas. Entre em contato pelo formulário
-            ou pelas redes abaixo.
+            Estou disponível para novas oportunidades executivas. Entre em
+            contato pelo formulário ou pelas redes abaixo.
           </p>
         </div>
 
@@ -70,14 +72,30 @@ export default function ContatoSection() {
                 className="flex items-center gap-4 p-5 rounded-2xl bg-white/10 border border-white/15 hover:bg-white/20 transition-all duration-200 group"
               >
                 <div className="w-12 h-12 rounded-xl bg-green-500 flex items-center justify-center flex-shrink-0 group-hover:scale-110 transition-transform">
-                  <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"/></svg>
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    width="22"
+                    height="22"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="white"
+                    strokeWidth="2"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                  >
+                    <path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z" />
+                  </svg>
                 </div>
                 <div>
                   <div className="text-xs text-white/60 font-semibold uppercase tracking-wide mb-0.5">
                     WhatsApp
                   </div>
-                  <div className="text-white font-semibold">(21) 9 9248-3471</div>
-                  <div className="text-white/50 text-xs">Clique para abrir no WhatsApp</div>
+                  <div className="text-white font-semibold">
+                    (21) 9 9248-3471
+                  </div>
+                  <div className="text-white/50 text-xs">
+                    Clique para abrir no WhatsApp
+                  </div>
                 </div>
               </a>
 
@@ -86,14 +104,31 @@ export default function ContatoSection() {
                 className="flex items-center gap-4 p-5 rounded-2xl bg-white/10 border border-white/15 hover:bg-white/20 transition-all duration-200 group"
               >
                 <div className="w-12 h-12 rounded-xl bg-blue-600 flex items-center justify-center flex-shrink-0 group-hover:scale-110 transition-transform">
-                  <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><rect width="20" height="16" x="2" y="4" rx="2"/><path d="m22 7-10 7L2 7"/></svg>
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    width="22"
+                    height="22"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="white"
+                    strokeWidth="2"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                  >
+                    <rect width="20" height="16" x="2" y="4" rx="2" />
+                    <path d="m22 7-10 7L2 7" />
+                  </svg>
                 </div>
                 <div>
                   <div className="text-xs text-white/60 font-semibold uppercase tracking-wide mb-0.5">
                     E-mail
                   </div>
-                  <div className="text-white font-semibold text-sm">contato@sidneyjones.com.br</div>
-                  <div className="text-white/50 text-xs">Resposta em até 24h</div>
+                  <div className="text-white font-semibold text-sm">
+                    contato@sidneyjones.com.br
+                  </div>
+                  <div className="text-white/50 text-xs">
+                    Resposta em até 24h
+                  </div>
                 </div>
               </a>
 
@@ -104,47 +139,107 @@ export default function ContatoSection() {
                 className="flex items-center gap-4 p-5 rounded-2xl bg-white/10 border border-white/15 hover:bg-white/20 transition-all duration-200 group"
               >
                 <div className="w-12 h-12 rounded-xl bg-[#0077B5] flex items-center justify-center flex-shrink-0 group-hover:scale-110 transition-transform">
-                  <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"/><rect width="4" height="12" x="2" y="9"/><circle cx="4" cy="4" r="2"/></svg>
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    width="22"
+                    height="22"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="white"
+                    strokeWidth="2"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                  >
+                    <path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z" />
+                    <rect width="4" height="12" x="2" y="9" />
+                    <circle cx="4" cy="4" r="2" />
+                  </svg>
                 </div>
                 <div>
                   <div className="text-xs text-white/60 font-semibold uppercase tracking-wide mb-0.5">
                     LinkedIn
                   </div>
-                  <div className="text-white font-semibold text-sm">professorsidneyjones</div>
-                  <div className="text-white/50 text-xs">Ver perfil completo</div>
+                  <div className="text-white font-semibold text-sm">
+                    professorsidneyjones
+                  </div>
+                  <div className="text-white/50 text-xs">
+                    Ver perfil completo
+                  </div>
                 </div>
               </a>
             </div>
 
             {/* LinkedIn Badge Personalizado */}
-<a
-  href="https://www.linkedin.com/in/professorsidneyjones/"
-  target="_blank"
-  rel="noopener noreferrer"
-  className="block p-5 rounded-2xl bg-white/10 border border-white/15 hover:bg-white/20 transition-all duration-200 group"
->
-  <div className="flex items-center gap-4">
-    <div className="w-12 h-12 rounded-xl bg-[#0077B5] flex items-center justify-center flex-shrink-0 group-hover:scale-110 transition-transform">
-      <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="white">
-        <path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z"/>
-      </svg>
-    </div>
-    <div>
-      <div className="text-white font-semibold">Sidney Jones</div>
-      <div className="text-white/70 text-sm">Gerente de Operações | MBA UFRJ</div>
-      <div className="text-white/50 text-xs mt-1">Ver perfil completo →</div>
-    </div>
-  </div>
-</a>
+            <a
+              href="https://www.linkedin.com/in/professorsidneyjones/"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="block p-5 rounded-2xl bg-[#0077B5] hover:bg-[#005e8c] transition-all duration-200 group"
+            >
+              <div className="flex items-center gap-4">
+                {/* Ícone do LinkedIn */}
+                <div className="w-12 h-12 rounded-full bg-white flex items-center justify-center flex-shrink-0 group-hover:scale-110 transition-transform">
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    width="28"
+                    height="28"
+                    viewBox="0 0 24 24"
+                    fill="#0077B5"
+                  >
+                    <path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z" />
+                  </svg>
+                </div>
+
+                {/* Texto */}
+                <div>
+                  <div className="text-white font-bold text-lg">
+                    Sidney Jones
+                  </div>
+                  <div className="text-white text-sm">
+                    Gerente de Operações | MBA UFRJ
+                  </div>
+                  <div className="text-white/80 text-xs mt-1 flex items-center gap-1">
+                    Ver perfil completo
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      width="12"
+                      height="12"
+                      viewBox="0 0 24 24"
+                      fill="none"
+                      stroke="currentColor"
+                      strokeWidth="2"
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                    >
+                      <line x1="5" y1="12" x2="19" y2="12"></line>
+                      <polyline points="12 5 19 12 12 19"></polyline>
+                    </svg>
+                  </div>
+                </div>
+              </div>
+            </a>
           </div>
 
           {/* Right: Form */}
           <div className="lg:col-span-3">
             <div className="bg-white rounded-3xl p-8 shadow-2xl">
-              {status === 'success' ? (
+              {status === "success" ? (
                 <div className="flex flex-col items-center justify-center py-12 text-center">
                   <div className="w-20 h-20 rounded-full bg-green-100 flex items-center justify-center mb-4">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="text-green-600"><polyline points="20 6 9 17 4 12"/></svg>
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      width="40"
+                      height="40"
+                      viewBox="0 0 24 24"
+                      fill="none"
+                      stroke="currentColor"
+                      strokeWidth="2"
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      className="text-green-600"
+                    >
+                      <polyline points="20 6 9 17 4 12" />
+                    </svg>
                   </div>
                   <h3 className="text-2xl font-bold text-gray-800 mb-2">
                     Mensagem Enviada!
@@ -153,7 +248,7 @@ export default function ContatoSection() {
                     Obrigado pelo contato. Responderei em breve.
                   </p>
                   <button
-                    onClick={() => setStatus('idle')}
+                    onClick={() => setStatus("idle")}
                     className="px-4 py-2 border border-gray-300 rounded-lg hover:bg-gray-50 transition"
                   >
                     Enviar outra mensagem
@@ -166,14 +261,18 @@ export default function ContatoSection() {
                       Formulário para Recrutadores
                     </h3>
                     <p className="text-sm text-gray-500">
-                      Preencha os dados abaixo e entrarei em contato o mais breve possível.
+                      Preencha os dados abaixo e entrarei em contato o mais
+                      breve possível.
                     </p>
                   </div>
 
                   <form onSubmit={handleSubmit} className="space-y-4">
                     <div className="grid sm:grid-cols-2 gap-4">
                       <div>
-                        <label htmlFor="name" className="text-sm font-semibold text-gray-700 mb-1.5 block">
+                        <label
+                          htmlFor="name"
+                          className="text-sm font-semibold text-gray-700 mb-1.5 block"
+                        >
                           Nome Completo *
                         </label>
                         <input
@@ -185,7 +284,10 @@ export default function ContatoSection() {
                         />
                       </div>
                       <div>
-                        <label htmlFor="company" className="text-sm font-semibold text-gray-700 mb-1.5 block">
+                        <label
+                          htmlFor="company"
+                          className="text-sm font-semibold text-gray-700 mb-1.5 block"
+                        >
                           Empresa
                         </label>
                         <input
@@ -199,7 +301,10 @@ export default function ContatoSection() {
 
                     <div className="grid sm:grid-cols-2 gap-4">
                       <div>
-                        <label htmlFor="email" className="text-sm font-semibold text-gray-700 mb-1.5 block">
+                        <label
+                          htmlFor="email"
+                          className="text-sm font-semibold text-gray-700 mb-1.5 block"
+                        >
                           E-mail *
                         </label>
                         <input
@@ -211,7 +316,10 @@ export default function ContatoSection() {
                         />
                       </div>
                       <div>
-                        <label htmlFor="phone" className="text-sm font-semibold text-gray-700 mb-1.5 block">
+                        <label
+                          htmlFor="phone"
+                          className="text-sm font-semibold text-gray-700 mb-1.5 block"
+                        >
                           Telefone
                         </label>
                         <input
@@ -224,7 +332,10 @@ export default function ContatoSection() {
                     </div>
 
                     <div>
-                      <label htmlFor="position" className="text-sm font-semibold text-gray-700 mb-1.5 block">
+                      <label
+                        htmlFor="position"
+                        className="text-sm font-semibold text-gray-700 mb-1.5 block"
+                      >
                         Cargo / Vaga em Aberto
                       </label>
                       <input
@@ -237,7 +348,10 @@ export default function ContatoSection() {
                     </div>
 
                     <div>
-                      <label htmlFor="message" className="text-sm font-semibold text-gray-700 mb-1.5 block">
+                      <label
+                        htmlFor="message"
+                        className="text-sm font-semibold text-gray-700 mb-1.5 block"
+                      >
                         Mensagem *
                       </label>
                       <textarea
@@ -252,28 +366,58 @@ export default function ContatoSection() {
 
                     <button
                       type="submit"
-                      disabled={status === 'loading'}
+                      disabled={status === "loading"}
                       className="w-full bg-blue-600 text-white font-semibold py-2 rounded-lg hover:bg-blue-700 transition disabled:opacity-50 flex items-center justify-center gap-2"
                     >
-                      {status === 'loading' ? (
+                      {status === "loading" ? (
                         <>
-                          <svg className="animate-spin h-4 w-4 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
-                            <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
-                            <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+                          <svg
+                            className="animate-spin h-4 w-4 text-white"
+                            xmlns="http://www.w3.org/2000/svg"
+                            fill="none"
+                            viewBox="0 0 24 24"
+                          >
+                            <circle
+                              className="opacity-25"
+                              cx="12"
+                              cy="12"
+                              r="10"
+                              stroke="currentColor"
+                              strokeWidth="4"
+                            ></circle>
+                            <path
+                              className="opacity-75"
+                              fill="currentColor"
+                              d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
+                            ></path>
                           </svg>
                           Enviando...
                         </>
                       ) : (
                         <>
-                          <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg>
+                          <svg
+                            xmlns="http://www.w3.org/2000/svg"
+                            width="18"
+                            height="18"
+                            viewBox="0 0 24 24"
+                            fill="none"
+                            stroke="currentColor"
+                            strokeWidth="2"
+                            strokeLinecap="round"
+                            strokeLinejoin="round"
+                          >
+                            <line x1="22" y1="2" x2="11" y2="13" />
+                            <polygon points="22 2 15 22 11 13 2 9 22 2" />
+                          </svg>
                           Enviar Mensagem
                         </>
                       )}
                     </button>
 
-                    {status === 'error' && (
+                    {status === "error" && (
                       <p className="text-red-600 text-center text-sm mt-2">
-                        Erro ao enviar. Tente novamente ou entre em contato por e-mail.
+                        Erro ao enviar. Tente novamente ou entre em contato por
+                        e-mail.
                       </p>
                     )}
                   </form>
