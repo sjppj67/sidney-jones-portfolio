@@ -169,55 +169,69 @@ export default function ContatoSection() {
               </a>
             </div>
 
-            {/* LinkedIn Badge Personalizado */}
-            <a
-              href="https://www.linkedin.com/in/professorsidneyjones/"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="block p-5 rounded-2xl bg-[#0077B5] hover:bg-[#005e8c] transition-all duration-200 group"
-            >
-              <div className="flex items-center gap-4">
-                {/* Ícone do LinkedIn */}
-                <div className="w-12 h-12 rounded-full bg-white flex items-center justify-center flex-shrink-0 group-hover:scale-110 transition-transform">
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    width="28"
-                    height="28"
-                    viewBox="0 0 24 24"
-                    fill="#0077B5"
-                  >
-                    <path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z" />
-                  </svg>
-                </div>
-
-                {/* Texto */}
-                <div>
-                  <div className="text-white font-bold text-lg">
-                    Sidney Jones
-                  </div>
-                  <div className="text-white text-sm">
-                    Gerente de Operações | MBA UFRJ
-                  </div>
-                  <div className="text-white/80 text-xs mt-1 flex items-center gap-1">
-                    Ver perfil completo
-                    <svg
-                      xmlns="http://www.w3.org/2000/svg"
-                      width="12"
-                      height="12"
-                      viewBox="0 0 24 24"
-                      fill="none"
-                      stroke="currentColor"
-                      strokeWidth="2"
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                    >
-                      <line x1="5" y1="12" x2="19" y2="12"></line>
-                      <polyline points="12 5 19 12 12 19"></polyline>
-                    </svg>
-                  </div>
-                </div>
-              </div>
-            </a>
+            {/* LinkedIn Badge - Versão Inline Garantida */}
+<a
+  href="https://www.linkedin.com/in/professorsidneyjones/"
+  target="_blank"
+  rel="noopener noreferrer"
+  style={{
+    display: 'block',
+    padding: '1.25rem',
+    borderRadius: '1rem',
+    backgroundColor: '#0077B5',
+    transition: 'all 0.2s ease',
+    textDecoration: 'none',
+    cursor: 'pointer'
+  }}
+  onMouseEnter={(e) => e.currentTarget.style.backgroundColor = '#005e8c'}
+  onMouseLeave={(e) => e.currentTarget.style.backgroundColor = '#0077B5'}
+>
+  <div style={{ display: 'flex', alignItems: 'center', gap: '1rem' }}>
+    {/* Ícone do LinkedIn */}
+    <div style={{
+      width: '48px',
+      height: '48px',
+      borderRadius: '50%',
+      backgroundColor: 'white',
+      display: 'flex',
+      alignItems: 'center',
+      justifyContent: 'center',
+      transition: 'transform 0.2s ease'
+    }}
+    onMouseEnter={(e) => e.currentTarget.style.transform = 'scale(1.1)'}
+    onMouseLeave={(e) => e.currentTarget.style.transform = 'scale(1)'}
+    >
+      <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="#0077B5">
+        <path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z"/>
+      </svg>
+    </div>
+    
+    {/* Texto */}
+    <div>
+      <div style={{ color: 'white', fontWeight: 'bold', fontSize: '1.125rem' }}>
+        Sidney Jones
+      </div>
+      <div style={{ color: 'white', fontSize: '0.875rem', opacity: 0.9 }}>
+        Gerente de Operações | MBA UFRJ
+      </div>
+      <div style={{ 
+        color: 'white', 
+        fontSize: '0.75rem', 
+        opacity: 0.8, 
+        marginTop: '0.25rem',
+        display: 'flex',
+        alignItems: 'center',
+        gap: '0.25rem'
+      }}>
+        Ver perfil completo 
+        <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+          <line x1="5" y1="12" x2="19" y2="12"></line>
+          <polyline points="12 5 19 12 12 19"></polyline>
+        </svg>
+      </div>
+    </div>
+  </div>
+</a>
           </div>
 
           {/* Right: Form */}
