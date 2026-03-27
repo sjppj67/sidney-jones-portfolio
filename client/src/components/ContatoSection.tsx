@@ -116,34 +116,26 @@ export default function ContatoSection() {
               </a>
             </div>
 
-            {/* LinkedIn Badge */}
-            <div className="p-5 rounded-2xl bg-white/10 border border-white/15">
-              <div className="text-xs text-white/60 font-semibold uppercase tracking-wide mb-3">
-                Perfil LinkedIn Verificado
-              </div>
-              <div
-                className="badge-base LI-profile-badge"
-                data-size="medium"
-                data-theme="light"
-                data-type="VERTICAL"
-                data-vanity="professorsidneyjones"
-                data-version="v1"
-              >
-                <a
-                  className="badge-base__link LI-simple-link"
-                  href="https://www.linkedin.com/in/professorsidneyjones?trk=profile-badge"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                >
-                </a>
-              </div>
-              <script
-                src="https://platform.linkedin.com/badges/js/profile.js"
-                async
-                defer
-                type="text/javascript"
-              />
-            </div>
+            {/* LinkedIn Badge Personalizado */}
+<a
+  href="https://www.linkedin.com/in/professorsidneyjones/"
+  target="_blank"
+  rel="noopener noreferrer"
+  className="block p-5 rounded-2xl bg-white/10 border border-white/15 hover:bg-white/20 transition-all duration-200 group"
+>
+  <div className="flex items-center gap-4">
+    <div className="w-12 h-12 rounded-xl bg-[#0077B5] flex items-center justify-center flex-shrink-0 group-hover:scale-110 transition-transform">
+      <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="white">
+        <path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z"/>
+      </svg>
+    </div>
+    <div>
+      <div className="text-white font-semibold">Sidney Jones</div>
+      <div className="text-white/70 text-sm">Gerente de Operações | MBA UFRJ</div>
+      <div className="text-white/50 text-xs mt-1">Ver perfil completo →</div>
+    </div>
+  </div>
+</a>
           </div>
 
           {/* Right: Form */}
