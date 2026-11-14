@@ -1,8 +1,7 @@
 import { ChevronDown, Linkedin, MessageCircle } from "lucide-react";
 import { Button } from "@/components/ui/button";
 
-const PHOTO_URL =
-  "https://d2xsxph8kpxj0f.cloudfront.net/310419663030420799/oNSr25JrpT4zhnZTzyDyCy/sidneyjones-terno_e9d06002.avif";
+const PHOTO_URL = "/sidneyjones-terno.avif";
 
 export default function HeroSection() {
   const scrollToSection = (id: string) => {
